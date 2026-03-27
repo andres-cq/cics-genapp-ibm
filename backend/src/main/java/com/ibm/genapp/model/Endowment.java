@@ -1,5 +1,6 @@
 package com.ibm.genapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Endowment {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "policy_number")
+    @JsonBackReference("policy-endowment")
     private Policy policy;
 
     @Column(name = "equities", length = 1)

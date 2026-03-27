@@ -1,5 +1,6 @@
 package com.ibm.genapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Commercial {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "policy_number")
+    @JsonBackReference("policy-commercial")
     private Policy policy;
 
     @Column(name = "request_date")

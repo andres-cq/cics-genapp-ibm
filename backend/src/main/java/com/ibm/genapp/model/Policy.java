@@ -1,5 +1,7 @@
 package com.ibm.genapp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,6 +32,7 @@ public class Policy {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_number", nullable = false)
     @NotNull
+    @JsonBackReference("customer-policies")
     private Customer customer;
 
     @Column(name = "issue_date")
@@ -64,18 +67,23 @@ public class Policy {
     private LocalDateTime updatedAt;
 
     @OneToOne(mappedBy = "policy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("policy-endowment")
     private Endowment endowment;
 
     @OneToOne(mappedBy = "policy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("policy-house")
     private House house;
 
     @OneToOne(mappedBy = "policy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("policy-motor")
     private Motor motor;
 
     @OneToOne(mappedBy = "policy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("policy-commercial")
     private Commercial commercial;
 
     @OneToMany(mappedBy = "policy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("policy-claims")
     private List<Claim> claims = new ArrayList<>();
 
     @PrePersist
